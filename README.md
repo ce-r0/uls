@@ -30,8 +30,12 @@ Puedes descargar la última versión estable desde la sección [Releases](https:
 - **Formato Universal:** Descarga el archivo `.AppImage`, otórgale permisos de ejecución (`chmod +x uls-*.AppImage`) y ejecútalo directamente.
 
 ## Interfaz
+<div align="center">
+    <img src="assets/ui-screenshot.png" width="600" alt="Captura de pantalla de la interfaz de ül">
+    <br><br>
+    <img src="assets/ui2.png" width="600" alt="Detección de rimas en la décima">
+</div>
 
-<img src="assets/ui-screenshot.png" width="600" alt="Captura de pantalla de la interfaz de ül">
 
 ## Desarrollo Local
 
