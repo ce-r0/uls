@@ -31,7 +31,7 @@ Puedes descargar la última versión estable desde la sección [Releases](https:
 
 ## Interfaz
 
-![Captura de pantalla de la interfaz de ül](assets/ui-screenshot.png)
+<img src="assets/ui-screenshot.png" width="600" alt="Captura de pantalla de la interfaz de ül">
 
 ## Desarrollo Local
 
