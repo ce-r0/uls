@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-12, macos-latest, ubuntu-22.04, windows-latest]
+        platform: [macos-latest, ubuntu-22.04, windows-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -38,6 +38,10 @@ jobs:
       - name: Instalar dependencias de Svelte
         run: npm install
 
+      - name: Preparar compilación Universal (Solo macOS)
+        if: matrix.platform == 'macos-latest'
+        run: rustup target add x86_64-apple-darwin aarch64-apple-darwin
+
       # El motor principal: Compila Tauri y genera el .rpm, .exe y .dmg
       - name: Compilar y Empaquetar Tauri
         uses: tauri-apps/tauri-action@v0
@@ -49,3 +53,4 @@ jobs:
           releaseBody: 'Nueva versión de ül lanzada automáticamente vía GitHub Actions.'
           releaseDraft: true
           prerelease: false
+          args: ${{ matrix.platform == 'macos-latest' && '--target universal-apple-darwin' || '' }}
