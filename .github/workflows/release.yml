@@ -1,0 +1,51 @@
+name: "Release Automation"
+
+# Este pipeline SOLO se activará cuando crees un "tag" de versión en git (ej: v0.1.0)
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    permissions:
+      contents: write # Necesario para subir los instaladores a GitHub Releases
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-22.04, windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar compilador de Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      # Estas son las dependencias que faltaban en tu Fedora, pero GitHub las instala solas
+      - name: Instalar dependencias del sistema (Solo Linux)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
+
+      - name: Instalar dependencias de Svelte
+        run: npm install
+
+      # El motor principal: Compila Tauri y genera el .rpm, .exe y .dmg
+      - name: Compilar y Empaquetar Tauri
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: app-v__VERSION__
+          releaseName: 'ül v__VERSION__'
+          releaseBody: 'Nueva versión de ül lanzada automáticamente vía GitHub Actions.'
+          releaseDraft: true
+          prerelease: false
