@@ -29,6 +29,10 @@ Puedes descargar la última versión estable desde la sección [Releases](https:
 - **Usuarios de Fedora/RedHat:** Descarga e instala el paquete `.rpm` utilizando tu gestor de paquetes (`sudo dnf install ./uls-*.rpm`).
 - **Formato Universal:** Descarga el archivo `.AppImage`, otórgale permisos de ejecución (`chmod +x uls-*.AppImage`) y ejecútalo directamente.
 
+## Interfaz
+
+![Captura de pantalla de la interfaz de ül](assets/ui-screenshot.png)
+
 ## Desarrollo Local
 
 Para contribuir o compilar el proyecto desde el código fuente, asegúrate de tener instalados Node.js (v25) y la cadena de herramientas de Rust (`rustup`).
